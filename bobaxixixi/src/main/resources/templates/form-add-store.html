@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BOBAXIXIXI</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    </head>    
+<body style="background-color: rgb(247, 235, 222);">
+<nav th:replace="fragments/fragment :: navbar('store')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2 style="text-align: center;">Add New Store</h2>
+                <br>
+                <form th:action="@{/store/add}" th:object="${store}" method="POST">
+                    Store Name : <br>
+                    <input class="form-control" type="text" name="name" required/>
+                    <br><br>
+
+                    Manager: <br>
+                    <select name="manager" class="form-control">
+                        <option th:each="manager : ${listManagerExist}"
+                                th:text="${manager.fullName}"
+                                th:value="${manager.id}">
+                        </option>
+                    </select>
+                    <br><br>
+
+                    Address : <br>
+                    <input class="form-control" type="text" name="address" required/>
+                    <br><br>
+
+                    Open Hour : <br>
+                    <input class="form-control" type="time" name="openHour" required/>
+                    <br><br>
+
+                    Close Hour : <br>
+                    <input class="form-control" type="time" name="closeHour" required/>
+                    <br><br>
+
+                    <button class="btn btn-primary" type="submit" name="save">Submit</button>
+                    <a class="btn btn-primary" href="/store">Back to List of Store</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BOBAXIXIXI</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    </head>    
+<body style="background-color: rgb(247, 235, 222);">
+<nav th:replace="fragments/fragment :: navbar('store')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Update Store</h2>
+                <br>
+                <form th:action="@{/store/update/{id}(id=${store.id})}" th:object="${store}" method="POST">
+
+                    <input type="hidden" th:field="*{id}" />
+                    Store Name : <br>
+                    <input class="form-control" type="text" name="name" th:value="*{name}" required/>
+                    <br><br>
+
+                    Manager: <br>
+                    <select name="manager" class="form-control">
+                        <option th:each="managerExist : ${listManagerExist}"
+                                th:text="${managerExist.fullName}"
+                                th:value="${managerExist.id}"
+                                th:selected="(${managerExist.id} == *{manager.id})">
+                                
+                        </option>
+                    </select>
+                    <br><br>
+
+                    Address : <br>
+                    <input class="form-control" type="text" name="address" th:value="*{address}" required/>
+                    <br><br>
+
+                    Open Hour : <br>
+                    <input class="form-control" type="time" name="openHour" th:value="*{openHour}" required/>
+                    <br><br>
+
+                    Close Hour : <br>
+                    <input class="form-control" type="time" name="closeHour" th:value="*{closeHour}" required/>
+                    <br><br>
+
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <a class="btn btn-primary" href="/store">Kembali</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

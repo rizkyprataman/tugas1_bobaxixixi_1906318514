@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BOBAXIXIXI</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    </head>    
+<body style="background-color: rgb(247, 235, 222);">
+<nav th:replace="fragments/fragment :: navbar('bobaTea')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+    <div class="card-body">
+        <h2 style="text-align: center;">List of Boba Tea</h2>
+        <div class="justify-content-center">
+            <a class="btn btn-primary" th:href="@{/boba/add}">+ Add Boba Tea</a>
+            <br><br>
+            <div th:if="*{listBoba.size() != 0}">
+                <table class="table" style="text-align: center;">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Size</th>
+                        <th>Ice</th>
+                        <th>Sugar</th>
+                        <th>topping</th>
+                        <th></th>
+                        <th>Action</th>
+                        <th></th>
+                    </tr>    
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="boba, iterationStatus : ${listBoba}"
+                        th:style="${iterationStatus.even} ? 'background-color: #f2f2f2;'">
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${boba.name}"></td>
+                        <td th:text="${boba.price}"></td>
+                        <td th:switch="${boba.size}">
+                            <p th:case="0">Small</p>
+                            <p th:case="1">Medium</p>
+                            <p th:case="2">Large</p> 
+                        </td>
+                        <td th:switch="${boba.iceLevel}">
+                            <p th:case="0">Less</p>
+                            <p th:case="1">Normal</p>
+                            <p th:case="2">Extra</p> 
+                        </td>
+                        <td th:switch="${boba.sugarLevel}"> 
+                            <p th:case="0">Less</p>
+                            <p th:case="1">Normal</p>
+                            <p th:case="2">Extra</p> 
+                        </td>
+                        <td  th:if="!${boba.topping}" th:text="'no topping'"></td>
+                        <td  th:if="${boba.topping}" th:text="${boba.topping.name}"></td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{/boba/{id}/assign-boba(id=${boba.id})}">Assign</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{/boba/update/} + ${boba.id}">Update</a>
+                        </td>
+                        <td>
+                            <form th:action="@{/boba/delete/{id}(id=${boba.id})}" th:object="${boba}" method="POST">
+                                <button class="btn btn-primary" type="submit">Delete</a>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div th:unless="*{listBoba.size() != 0}">
+                    <h2 th:text="'Tidak ada Boba'"></h2>
+                </div>
+            <br>
+            <a class="btn btn-primary" href="/">Home</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+</body>
+</html>

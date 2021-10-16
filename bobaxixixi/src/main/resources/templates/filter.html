@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BOBAXIXIXI</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    </head>    
+<body style="background-color: rgb(247, 235, 222);">
+<nav th:replace="fragments/fragment :: navbar('filter')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+    <div class="card-body">
+        <h2 style="text-align: center;">Filter Manager</h2>
+        <div class="justify-content-center">
+            <form th:action="@{/filter}" method="GET">
+                Boba Tea:
+                <select name="bobaName" class="form-control" required>
+                    <option th:each="bobaExist : ${listBobaTeaExist}"
+                            th:text="${bobaExist.name}"
+                            th:value="${bobaExist.name}">
+                    </option>
+                </select>
+                <br>
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <br><br>
+            </form>
+                <table class="table" style="text-align: center;">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Date of Birth</th>
+                    </tr>    
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="manager, iterationStatus : ${listManager}"
+                        th:style="${iterationStatus.even} ? 'background-color: #f2f2f2;'">
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${manager.fullName}"></td>
+                        <td th:switch="${manager.gender}"> 
+                            <p th:case="0">male</p>
+                            <p th:case="1">Female</p>
+                        </td>
+                        <td th:text="${#dates.format(manager.dateOfBirth, 'dd-MMM-yyyy')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br><br>
+            <a class="btn btn-primary" href="/">Home</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

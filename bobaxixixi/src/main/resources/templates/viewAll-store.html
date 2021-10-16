@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BOBAXIXIXI</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    </head>    
+<body style="background-color: rgb(247, 235, 222);">
+<nav th:replace="fragments/fragment :: navbar('store')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+    <div class="card-body">
+        <h2 style="text-align: center;">List of Store</h2>
+        <div class="justify-content-center">
+            <a class="btn btn-primary" th:href="@{/store/add}">+ Add Store</a>
+            <br><br>
+            <div th:if="*{listStore.size() != 0}">
+                <table class="table" style="text-align: center;">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Store Code</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Operational Hour</th>
+                        <th></th>
+                        <th>Action</th>
+                        <th></th>
+                    </tr>    
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="store, iterationStatus : ${listStore}"
+                        th:style="${iterationStatus.even} ? 'background-color: #f2f2f2;'">
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${store.storeCode}"></td>
+                        <td th:text="${store.Name}"></td>
+                        <td th:text="${store.Address}"></td>
+                        <td th:text="${store.openHour}+' - '+ ${store.closeHour}"></td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{/store/}+ ${store.id}">View</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{/store/update/} + ${store.id}">Update</a>
+                        </td>
+                        <td> 
+                            <form th:action="@{/store/delete/{id}(id=${store.id})}" th:object="${store}" method="POST">
+                                <button class="btn btn-primary" type="submit">Delete</a>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div th:unless="*{listStore.size() != 0}">
+                    <h2 th:text="'Tidak ada Store'"></h2>
+                </div>
+            <br>
+            <a class="btn btn-primary" href="/">Home</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+</body>
+</html>

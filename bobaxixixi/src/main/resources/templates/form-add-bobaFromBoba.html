@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BOBAXIXIXI</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    </head>    
+<body style="background-color: rgb(247, 235, 222);">
+<nav th:replace="fragments/fragment :: navbar('bobaTea')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Add Boba Tea</h2>
+                <br>
+                <form th:action="@{ /boba/{idBoba}/assign-boba(idBoba=${bobaTea.id})}" th:object="${bobaTea}" method="POST">
+
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" th:field="*{name}" />
+                    <table class="table" style="text-align: center;">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Store Code</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Operational Hour</th>
+                        </tr>    
+                        </thead>
+                        <tbody>
+    
+                        <tr th:each="store, iterationStatus : ${listStoreAdded}">
+                            <td><input type="checkbox" name="checklist" th:value="${store.id}" checked/></td>
+                            <td th:text="${store.storeCode}"></td>
+                            <td th:text="${store.Name}"></td>
+                            <td th:text="${store.Address}"></td>
+                            <td th:text="${store.openHour}+' - '+ ${store.closeHour}"></td>
+                        </tr>
+                        <tr th:each="store, iterationStatus : ${listStoreNotAdded}">
+                            <td><input type="checkbox" name="checklist" th:value="${store.id}"/></td>
+                            <td th:text="${store.storeCode}"></td>
+                            <td th:text="${store.Name}"></td>
+                            <td th:text="${store.Address}"></td>
+                            <td th:text="${store.openHour}+' - '+ ${store.closeHour}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <a class="btn btn-primary" th:href="@{/boba}">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

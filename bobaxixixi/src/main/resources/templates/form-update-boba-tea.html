@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BOBAXIXIXI</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    </head>    
+<body style="background-color: rgb(247, 235, 222);">
+<nav th:replace="fragments/fragment :: navbar('bobaTea')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Update Boba Tea</h2>
+                <br>
+                <form th:action="@{/boba/update/{id}(id=${bobaTea.id})}" th:object="${bobaTea}" method="POST">
+
+                    <input type="hidden" th:field="*{id}" />
+                    Boba Tea Name : <br>
+                    <input class="form-control" type="text" name="name" th:value="*{name}" required/>
+                    <br><br>
+
+                    Price : <br>
+                    <input class="form-control" type="number" name="price" th:value="*{price}" required/>
+                    <br><br>
+
+                    Size : <br>
+                    <select name="size" class="form-control"  th:field="*{size}">
+                        <option th:text="'S'" th:value="0"></option>
+                        <option th:text="'M'" th:value="1"></option>
+                        <option th:text="'L'" th:value="2"></option>
+                    </select>
+                    <br><br>
+
+                    Sugar Level: <br>
+                    <select name="sugarLevel" class="form-control" th:field="*{sugarLevel}">
+                        <option th:text="'Less'" th:value="0"></option>
+                        <option th:text="'Normal'" th:value="1"></option>
+                        <option th:text="'Extra'" th:value="2"></option>
+                    </select>
+                    <br><br>
+
+                    Ice Level: <br>
+                    <select name="iceLevel" class="form-control"  th:field="*{iceLevel}">
+                        <option th:text="'Less'" th:value="0" ></option>
+                        <option th:text="'Normal'" th:value="1"></option>
+                        <option th:text="'Extra'" th:value="2"></option>
+                    </select>
+                    <br><br>
+
+                    Topping: <br>
+                    <select name="topping" class="form-control">
+                        <option th:each="toppingExist : ${listToppingExist}"
+                                th:text="${toppingExist.name}"
+                                th:value="${toppingExist.id}">
+                        </option>
+                    </select>
+                    <br><br>
+
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <a class="btn btn-primary" href="/boba">Back to List of Boba Tea</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
